@@ -1,4 +1,2 @@
-// How it works section component
-export function HowItWorks() {
-  return <section>How It Works</section>;
-}
+// Re-export SolutionSection as HowItWorks for backwards compatibility
+export { SolutionSection as HowItWorks } from "@/components/marketing/SolutionSection";
