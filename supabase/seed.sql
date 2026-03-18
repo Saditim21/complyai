@@ -1,0 +1,1 @@
+-- Seed: AI categories, common tools, requirements
