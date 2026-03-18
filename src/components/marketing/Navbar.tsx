@@ -19,7 +19,7 @@ export function Navbar(): React.ReactElement {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white border-b border-[--border-default]">
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-slate-200">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-shrink-0">
@@ -31,7 +31,7 @@ export function Navbar(): React.ReactElement {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-[--text-secondary] hover:text-[--text-primary] transition-colors duration-150"
+                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors duration-150"
               >
                 {link.label}
               </Link>
@@ -41,7 +41,7 @@ export function Navbar(): React.ReactElement {
           <div className="hidden md:block">
             <Link
               href="/signup"
-              className="inline-flex items-center justify-center rounded-lg bg-[--brand-primary] px-4 py-2 text-sm font-medium text-white hover:bg-[--brand-primary-light] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[--brand-primary] focus:ring-offset-2"
+              className="inline-flex items-center justify-center rounded-lg bg-[#1B2B5A] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#2A3F7A] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#1B2B5A] focus:ring-offset-2"
             >
               {CTA_TEXT.getStartedFree}
             </Link>
@@ -50,7 +50,7 @@ export function Navbar(): React.ReactElement {
           <button
             type="button"
             onClick={toggleMobileMenu}
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-[--text-secondary] hover:bg-[--bg-secondary] hover:text-[--text-primary] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[--brand-primary]"
+            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#1B2B5A]"
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
@@ -63,14 +63,14 @@ export function Navbar(): React.ReactElement {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-[--border-default]">
+          <div className="md:hidden border-t border-slate-200">
             <div className="space-y-1 px-2 pb-4 pt-2">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={closeMobileMenu}
-                  className="block rounded-lg px-3 py-2 text-base font-medium text-[--text-secondary] hover:bg-[--bg-secondary] hover:text-[--text-primary] transition-colors duration-150"
+                  className="block rounded-lg px-3 py-2 text-base font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150"
                 >
                   {link.label}
                 </Link>
@@ -79,7 +79,7 @@ export function Navbar(): React.ReactElement {
                 <Link
                   href="/signup"
                   onClick={closeMobileMenu}
-                  className="block w-full rounded-lg bg-[--brand-primary] px-3 py-2 text-center text-base font-medium text-white hover:bg-[--brand-primary-light] transition-colors duration-150"
+                  className="block w-full rounded-lg bg-[#1B2B5A] px-3 py-2.5 text-center text-base font-medium text-white hover:bg-[#2A3F7A] transition-colors duration-150"
                 >
                   {CTA_TEXT.getStartedFree}
                 </Link>

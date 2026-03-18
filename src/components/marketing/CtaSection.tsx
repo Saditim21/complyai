@@ -10,8 +10,6 @@ export function CtaSection(): React.ReactElement {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const waitlistCount = 847;
-
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     if (!email || isSubmitting) return;
@@ -26,24 +24,19 @@ export function CtaSection(): React.ReactElement {
     setEmail("");
   };
 
-  const socialProofText = CTA_SECTION.socialProof.replace(
-    "{count}",
-    waitlistCount.toLocaleString()
-  );
-
   return (
-    <section className="bg-[--brand-primary] py-16 lg:py-20">
+    <section className="bg-[#1B2B5A] py-12 lg:py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+        <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
           {CTA_SECTION.title}
         </h2>
-        <p className="mt-4 text-lg text-slate-300">
+        <p className="mt-3 text-base text-slate-300 sm:text-lg">
           {CTA_SECTION.subtitle}
         </p>
 
         {isSubmitted ? (
-          <div className="mt-8 rounded-lg bg-white/10 p-6">
-            <p className="text-lg font-medium text-white">
+          <div className="mt-8 rounded-xl border border-white/20 bg-white/10 p-6">
+            <p className="text-lg font-semibold text-white">
               Thanks for signing up!
             </p>
             <p className="mt-2 text-sm text-slate-300">
@@ -65,12 +58,12 @@ export function CtaSection(): React.ReactElement {
               onChange={(e) => setEmail(e.target.value)}
               placeholder={CTA_SECTION.placeholder}
               required
-              className="w-full rounded-lg border-0 bg-white px-4 py-3 text-base text-[--text-primary] placeholder:text-[--text-tertiary] focus:outline-none focus:ring-2 focus:ring-white/50 sm:w-80"
+              className="w-full rounded-lg border border-white/20 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-white/50 sm:w-72"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[--brand-secondary] px-6 py-3 text-base font-medium text-white transition-colors duration-150 hover:bg-[--brand-secondary-light] focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0D9488] px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-150 hover:bg-[#14B8A6] focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 "Submitting..."
@@ -85,7 +78,7 @@ export function CtaSection(): React.ReactElement {
         )}
 
         <p className="mt-6 text-sm text-slate-400">
-          {socialProofText}
+          No credit card required · Free for your first AI system
         </p>
       </div>
     </section>

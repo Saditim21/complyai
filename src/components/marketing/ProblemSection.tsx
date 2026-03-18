@@ -22,13 +22,13 @@ export function ProblemSection(): React.ReactElement {
   }, []);
 
   return (
-    <section className="bg-[--bg-secondary] py-16 lg:py-20">
+    <section className="bg-slate-50 py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-2xl font-semibold tracking-tight text-[--text-primary] sm:text-3xl">
+        <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
           {PROBLEM_SECTION.title}
         </h2>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {PROBLEM_SECTION.stats.map((item) => {
             const Icon = iconMap[item.icon as IconName];
             const isDeadlineStat = item.id === "deadline";
@@ -41,18 +41,18 @@ export function ProblemSection(): React.ReactElement {
             return (
               <div
                 key={item.id}
-                className="flex flex-col items-center text-center"
+                className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
                   <Icon
-                    className="h-6 w-6 text-[--brand-primary]"
+                    className="h-6 w-6 text-[#1B2B5A]"
                     aria-hidden="true"
                   />
                 </div>
-                <p className="mt-4 text-2xl font-semibold text-[--text-primary] sm:text-3xl">
+                <p className="mt-4 text-2xl font-bold text-[#1B2B5A] sm:text-3xl">
                   {statText}
                 </p>
-                <p className="mt-2 text-base text-[--text-secondary] max-w-xs">
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
                   {item.description}
                 </p>
               </div>
