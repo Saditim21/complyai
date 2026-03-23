@@ -54,7 +54,7 @@ export function CtaSection(): React.ReactElement {
               <p className="text-lg font-semibold text-white">You're on the list!</p>
             </div>
             <p className="mt-2 text-sm text-slate-300">
-              We'll be in touch with early access to ComplyAI.
+              We'll be in touch with early access to ClarionAI.
             </p>
           </div>
         ) : (

@@ -1,6 +1,6 @@
 // App-wide constants
 
-export const SITE_NAME = "ComplyAI";
+export const SITE_NAME = "ClarionAI";
 
 export const NAV_LINKS = [
   { href: "/#how-it-works", label: "How it works" },
@@ -30,9 +30,9 @@ export const FOOTER_LINKS = {
 
 export const FOOTER_TEXT = {
   disclaimer:
-    "ComplyAI is an independent compliance tool. It does not constitute legal advice.",
+    "ClarionAI is an independent compliance tool. It does not constitute legal advice.",
   euCompliance: "Designed for EU AI Act compliance",
-  copyright: `© ${new Date().getFullYear()} ComplyAI. All rights reserved.`,
+  copyright: `© ${new Date().getFullYear()} ClarionAI. All rights reserved.`,
 } as const;
 
 export const CTA_TEXT = {
@@ -46,7 +46,7 @@ export const HERO_TEXT = {
   eyebrow: "EU AI Act enforcement begins August 2, 2026",
   headline: "AI compliance\nmade simple for\nEuropean businesses",
   subheadline:
-    "Most businesses use AI without knowing it falls under regulation. ComplyAI identifies your AI systems, classifies risk, and generates the documentation you need — before the deadline.",
+    "Most businesses use AI without knowing it falls under regulation. ClarionAI identifies your AI systems, classifies risk, and generates the documentation you need — before the deadline.",
   trustNote: "No credit card required · 5 minutes to your first assessment",
   trustBarPrefix: "Built for compliance with",
   trustBarRegulation: "EU AI Act (Regulation 2024/1689)",
@@ -82,7 +82,7 @@ export const PROBLEM_SECTION = {
 } as const;
 
 export const SOLUTION_SECTION = {
-  title: "How ComplyAI works",
+  title: "How ClarionAI works",
   steps: [
     {
       id: 1,
@@ -239,9 +239,9 @@ export const FAQ_SECTION = {
     },
     {
       id: "legal-advice",
-      question: "Is ComplyAI a substitute for legal advice?",
+      question: "Is ClarionAI a substitute for legal advice?",
       answer:
-        "No. ComplyAI is a compliance management tool that helps you inventory, classify, and document your AI systems. While we provide guidance based on the EU AI Act text and official guidance, our tool does not constitute legal advice. For complex situations or high-risk AI systems, we recommend consulting with qualified legal professionals who specialize in AI regulation.",
+        "No. ClarionAI is a compliance management tool that helps you inventory, classify, and document your AI systems. While we provide guidance based on the EU AI Act text and official guidance, our tool does not constitute legal advice. For complex situations or high-risk AI systems, we recommend consulting with qualified legal professionals who specialize in AI regulation.",
     },
     {
       id: "how-long",

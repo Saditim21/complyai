@@ -1,13 +1,13 @@
-# CLAUDE.md — ComplyAI Project Specification
+# CLAUDE.md — ClarionAI Project Specification
 
-> This file is the single source of truth for the ComplyAI project.
+> This file is the single source of truth for the ClarionAI project.
 > Claude Code MUST read and follow this before writing any code.
 
 ---
 
 ## Project Overview
 
-**ComplyAI** is a self-service SaaS platform that helps EU small and medium businesses comply with the EU AI Act before the August 2, 2026 enforcement deadline. Users inventory their AI systems, get risk classifications, generate required compliance documents, and track progress — all without needing a lawyer.
+**ClarionAI** is a self-service SaaS platform that helps EU small and medium businesses comply with the EU AI Act before the August 2, 2026 enforcement deadline. Users inventory their AI systems, get risk classifications, generate required compliance documents, and track progress — all without needing a lawyer.
 
 **Tech Stack**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, shadcn/ui, Supabase (PostgreSQL + Auth + Storage), Claude API (Anthropic), Stripe, Resend, Vercel
 
@@ -62,7 +62,7 @@
 ## Design System
 
 ### Design Philosophy
-ComplyAI must feel **trustworthy, calm, authoritative, and European**. Think Vanta meets Linear meets Dutch government design. Not a flashy startup — a tool that serious businesses trust with regulatory compliance. Every pixel should communicate: "We know what we're doing. You're in safe hands."
+ClarionAI must feel **trustworthy, calm, authoritative, and European**. Think Vanta meets Linear meets Dutch government design. Not a flashy startup — a tool that serious businesses trust with regulatory compliance. Every pixel should communicate: "We know what we're doing. You're in safe hands."
 
 ### Colors
 
@@ -249,7 +249,7 @@ const statusStyles = {
 ## Project Structure
 
 ```
-complyai/
+clarionai/
 ├── CLAUDE.md                         ← THIS FILE (always read first)
 ├── src/
 │   ├── app/
@@ -361,14 +361,14 @@ complyai/
 ### Page Structure (top to bottom)
 
 **1. Navbar** (sticky, white bg, subtle bottom border)
-- Logo (left): "ComplyAI" in brand-primary, custom wordmark
+- Logo (left): "ClarionAI" in brand-primary, custom wordmark
 - Nav links (center): How it works, Pricing, Blog
 - CTA (right): "Get started free" button (brand-primary)
 
 **2. Hero Section** (py-20, centered text)
 - Eyebrow: "EU AI Act enforcement begins August 2, 2026" — small, amber text, with subtle pulse dot
 - Headline (Instrument Serif, 56px): "AI compliance\nmade simple for\nEuropean businesses"
-- Subheadline (Inter, 18px, text-secondary, max-w-2xl): "Most businesses use AI without knowing it falls under regulation. ComplyAI identifies your AI systems, classifies risk, and generates the documentation you need — before the deadline."
+- Subheadline (Inter, 18px, text-secondary, max-w-2xl): "Most businesses use AI without knowing it falls under regulation. ClarionAI identifies your AI systems, classifies risk, and generates the documentation you need — before the deadline."
 - CTA: "Check your compliance — free" (large, brand-primary button) + "See how it works" (text link with arrow)
 - Below CTA: "No credit card required · 5 minutes to your first assessment"
 - Trust bar: "Built for compliance with" + EU flag icon + "EU AI Act (Regulation 2024/1689)"
@@ -380,7 +380,7 @@ complyai/
   2. Eye-off icon — "53% have no AI inventory" — "Over half of organizations lack a systematic inventory of AI systems they use"
   3. Clock icon — "137 days remaining" — "The enforcement deadline is August 2, 2026. Most companies haven't started." (calculate dynamically)
 
-**4. Solution Section** — "How ComplyAI works" (py-16)
+**4. Solution Section** — "How ClarionAI works" (py-16)
 - Four steps with numbers, each with mockup screenshot on alternating sides:
   1. "Discover your AI systems" — guided wizard screenshot
   2. "Understand your risk level" — classification result screenshot
@@ -409,7 +409,7 @@ complyai/
   - "Does my business need to comply with the EU AI Act?"
   - "What counts as an AI system under the Act?"
   - "What happens if I don't comply by August 2026?"
-  - "Is ComplyAI a substitute for legal advice?"
+  - "Is ClarionAI a substitute for legal advice?"
   - "How long does it take to complete an assessment?"
   - "Is my data secure?"
 
@@ -421,7 +421,7 @@ complyai/
 
 **9. Footer** (dark bg)
 - Logo, product links, legal links, social links
-- "ComplyAI is an independent compliance tool. It does not constitute legal advice."
+- "ClarionAI is an independent compliance tool. It does not constitute legal advice."
 - EU flag + "Designed for EU AI Act compliance"
 
 ### Email Collection (Pre-launch)

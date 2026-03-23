@@ -16,9 +16,9 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ComplyAI — EU AI Act Compliance Made Simple",
+  title: "ClarionAI — EU AI Act Compliance Made Simple",
   description:
-    "ComplyAI helps EU businesses comply with the EU AI Act. Inventory your AI systems, classify risk, and generate required compliance documents before the August 2026 deadline.",
+    "ClarionAI helps EU businesses comply with the EU AI Act. Inventory your AI systems, classify risk, and generate required compliance documents before the August 2026 deadline.",
 };
 
 export default function RootLayout({
