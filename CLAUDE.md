@@ -1,3 +1,16 @@
+## Current Status
+- [x] Project initialized (Next.js, Tailwind, shadcn/ui)
+- [x] Landing page complete (all sections)
+- [x] Email collection working (Supabase waitlist)
+- [x] Deployed to Vercel (clarionai.eu)
+- [x] Domain configured (Hostinger DNS → Vercel)
+- [ ] Supabase auth (signup/login)
+- [ ] AI inventory wizard
+- [ ] Classification engine (Annex III logic)
+- [ ] Compliance dashboard
+- [ ] Document generation (Claude API)
+- [ ] Stripe payments
+
 # CLAUDE.md — ClarionAI Project Specification
 
 > This file is the single source of truth for the ClarionAI project.
