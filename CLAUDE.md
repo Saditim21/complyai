@@ -1,15 +1,67 @@
-## Current Status
-- [x] Project initialized (Next.js, Tailwind, shadcn/ui)
-- [x] Landing page complete (all sections)
-- [x] Email collection working (Supabase waitlist)
+## Current Status (Last updated: Phase 3 in progress)
+
+### COMPLETED
+- [x] Project initialized (Next.js 14, TypeScript, Tailwind, shadcn/ui)
+- [x] Landing page complete (hero, problem, how-it-works with mini UI mockups, features, pricing, FAQ, CTA)
+- [x] Waitlist email collection (Supabase waitlist table + API route)
 - [x] Deployed to Vercel (clarionai.eu)
 - [x] Domain configured (Hostinger DNS → Vercel)
-- [ ] Supabase auth (signup/login)
-- [ ] AI inventory wizard
-- [ ] Classification engine (Annex III logic)
-- [ ] Compliance dashboard
+- [x] Product renamed from ComplyAI to ClarionAI
+- [x] Supabase auth (signup/login pages, email confirmation, auth callback)
+- [x] Dashboard shell (sidebar navigation, header, collapsible mobile menu)
+- [x] Database tables created: waitlist, organizations, users, ai_systems, compliance_requirements
+- [x] RLS policies on all tables
+- [x] Classification engine (src/lib/classification/ — categories.ts, engine.ts, requirements.ts)
+
+### IN PROGRESS
+- [ ] Dashboard overview page — currently shows a broken "Complete your profile" screen that needs to be removed. The user/org data already exists in the database. Dashboard should be a Server Component that fetches user data via Supabase server client and shows the main overview.
+
+### NOT STARTED
+- [ ] AI inventory wizard (src/app/(dashboard)/inventory/new/page.tsx — file exists but needs testing)
+- [ ] Dashboard with real AI system data
+- [ ] AI systems list page
 - [ ] Document generation (Claude API)
 - [ ] Stripe payments
+
+### KNOWN ISSUES
+1. Dashboard page shows "Complete your profile" instead of main dashboard — needs to be rewritten as Server Component that fetches existing user/org data
+2. RLS on users table is currently DISABLED for testing — must re-enable after fixing the dashboard query. Run: ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+3. The get_user_organization_id() helper function exists and is used by ai_systems/compliance_requirements RLS policies — do not drop it
+4. .env.local must be created manually on each machine (not in git)
+5. All migration SQL files must be run manually in Supabase SQL Editor — they don't auto-sync
+
+### SUPABASE DETAILS
+- Project URL: https://ovtfoigluzoreqdlltxn.supabase.co
+- Test user ID: dad5068c-734d-4d8c-8a5a-5d51c61ee29f
+- Test user org ID: 73d6ea54-0f03-4222-a52b-d383d1e4fde0
+```
+
+---
+
+**Prompt for the new chat:**
+```
+I'm building ClarionAI (clarionai.eu) — an EU AI Act compliance SaaS for SMBs. The full technical spec is in CLAUDE.md at the repo root, and the business plan is in docs/PROJECT_BLUEPRINT.md.
+
+Tech stack: Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui, Supabase, Claude API, Stripe, Vercel.
+
+Current situation:
+- Landing page and deployment are done
+- Supabase auth works (signup/login/email confirmation)
+- Dashboard shell exists (sidebar, header, mobile menu)
+- All database tables exist (organizations, users, ai_systems, compliance_requirements)
+- Classification engine is built (src/lib/classification/)
+- The AI inventory wizard file exists at src/app/(dashboard)/inventory/new/page.tsx but hasn't been tested
+
+Immediate problem to fix:
+The dashboard at src/app/(dashboard)/page.tsx shows a "Complete your profile" onboarding screen that shouldn't exist. The user and organization already exist in the database. This screen needs to be removed entirely. The dashboard should be a Server Component that uses the Supabase server client to fetch the user's data (joined with organizations) and shows the main overview: welcome message, "Start your AI assessment" CTA, stats cards (AI systems count, compliance score, days until August 2 2026), and AI systems list.
+
+After fixing that, I need to:
+1. Re-enable RLS on users table (currently disabled for testing)
+2. Test the AI inventory wizard end-to-end
+3. Build the dashboard with real data from the wizard
+4. Build the AI systems list page
+
+Give me the exact prompt to give Claude Code to fix the dashboard, then the step-by-step plan for the remaining work.
 
 # CLAUDE.md — ClarionAI Project Specification
 

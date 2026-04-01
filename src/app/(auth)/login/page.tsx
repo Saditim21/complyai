@@ -37,9 +37,8 @@ function LoginForm(): React.ReactElement {
       return
     }
 
-    const next = searchParams.get('next') ?? '/dashboard'
-    router.push(next)
-    router.refresh()
+  const next = searchParams.get('next') ?? '/dashboard'
+  window.location.href = next
   }
 
   return (

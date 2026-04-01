@@ -26,6 +26,8 @@ export async function updateSession(request: NextRequest): Promise<{
     }
   )
 
+  
+
   // getUser() validates the token — do not replace with getSession()
   const {
     data: { user },

@@ -8,6 +8,7 @@ import type {
   ComplianceRequirement,
   ComplianceRequirementInsert,
   ComplianceRequirementUpdate,
+  User,
 } from '@/types/database'
 
 // Error type for query results
@@ -19,6 +20,25 @@ export interface QueryError {
 export interface QueryResult<T> {
   data: T | null
   error: QueryError | null
+}
+
+// User queries
+
+export async function getUserByAuthId(
+  supabase: SupabaseClient,
+  authId: string
+): Promise<QueryResult<User>> {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', authId)
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as User, error: null }
 }
 
 // AI Systems queries
