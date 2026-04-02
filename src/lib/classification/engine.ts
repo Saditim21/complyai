@@ -70,7 +70,7 @@ function matchAnnexIII(input: AISystemInput): AnnexIIIMatch | null {
   return bestScore >= 1 ? bestMatch : null
 }
 
-function checkExceptions(input: AISystemInput, match: AnnexIIIMatch): { applies: boolean; exception: string } | null {
+function checkExceptions(input: AISystemInput): { applies: boolean; exception: string } | null {
   const combinedText = `${input.description} ${input.purpose}`.toLowerCase()
 
   // Exception 1: Narrow procedural task
@@ -183,7 +183,7 @@ export function classifyRisk(input: AISystemInput): ClassificationResult {
   const annexMatch = matchAnnexIII(input)
   if (annexMatch && annexMatch.confidence !== 'low') {
     // Step 3: Check for exceptions (Art. 6(3))
-    const exception = checkExceptions(input, annexMatch)
+    const exception = checkExceptions(input)
     if (exception?.applies) {
       const transparency = checkTransparency(input)
       const result: Partial<ClassificationResult> = {

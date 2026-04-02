@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Flag } from "lucide-react";
 
-import { FOOTER_LINKS, FOOTER_TEXT, SITE_NAME } from "@/lib/constants";
+import { FOOTER_LINKS, FOOTER_TEXT } from "@/lib/constants";
 import { Logo } from "@/components/shared/Logo";
 
 export function Footer(): React.ReactElement {

@@ -9,21 +9,6 @@ import type {
   DocumentTemplate,
 } from '@/types/documents'
 
-function formatDataTypes(dataTypes: string[]): string {
-  if (dataTypes.length === 0) return 'No specific data types identified'
-
-  const labels: Record<string, string> = {
-    personal_data: 'Personal Data',
-    biometric: 'Biometric Data',
-    financial: 'Financial Data',
-    health: 'Health Data',
-    location: 'Location Data',
-    behavioral: 'Behavioral Data',
-  }
-
-  return dataTypes.map((dt) => labels[dt] ?? dt).join(', ')
-}
-
 function generateDocumentVersion(): string {
   const date = new Date()
   const year = date.getFullYear()

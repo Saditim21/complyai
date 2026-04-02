@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 import { createClient } from '@/lib/supabase/client'
 import { Logo } from '@/components/shared/Logo'
@@ -10,7 +10,6 @@ import { Logo } from '@/components/shared/Logo'
 type FormState = 'idle' | 'submitting' | 'error'
 
 function LoginForm(): React.ReactElement {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [formState, setFormState] = useState<FormState>('idle')
   const [errorMessage, setErrorMessage] = useState('')

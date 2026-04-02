@@ -383,3 +383,29 @@ export async function deleteDocument(
 
   return { data: null, error: null }
 }
+
+// Roadmap queries
+
+export interface RequirementWithSystem extends ComplianceRequirement {
+  ai_systems: Pick<AISystem, 'id' | 'name' | 'risk_level'>
+}
+
+export async function getAllRequirements(
+  supabase: SupabaseClient,
+  orgId: string
+): Promise<QueryResult<RequirementWithSystem[]>> {
+  const { data, error } = await supabase
+    .from('compliance_requirements')
+    .select(`
+      *,
+      ai_systems!inner (id, name, risk_level, organization_id)
+    `)
+    .eq('ai_systems.organization_id', orgId)
+    .order('due_date', { ascending: true, nullsFirst: false })
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as RequirementWithSystem[], error: null }
+}
