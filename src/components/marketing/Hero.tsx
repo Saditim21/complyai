@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight, CheckCircle, Flag } from "lucide-react";
 
 import { getDaysUntil } from "@/lib/utils";
@@ -9,13 +9,9 @@ import { HERO_TEXT, CTA_TEXT, EU_AI_ACT_DEADLINE } from "@/lib/constants";
 type FormState = "idle" | "submitting" | "success" | "duplicate" | "error";
 
 export function Hero(): React.ReactElement {
-  const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
+  const daysRemaining = useMemo(() => getDaysUntil(EU_AI_ACT_DEADLINE), []);
   const [email, setEmail] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
-
-  useEffect(() => {
-    setDaysRemaining(getDaysUntil(EU_AI_ACT_DEADLINE));
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
@@ -73,8 +69,8 @@ export function Hero(): React.ReactElement {
               <div className="mx-auto flex max-w-md items-center justify-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
                 <CheckCircle className="h-5 w-5 shrink-0 text-emerald-600" aria-hidden="true" />
                 <div className="text-left">
-                  <p className="text-sm font-semibold text-emerald-800">You're on the list!</p>
-                  <p className="text-sm text-emerald-700">We'll send you early access when we launch.</p>
+                  <p className="text-sm font-semibold text-emerald-800">You&apos;re on the list!</p>
+                  <p className="text-sm text-emerald-700">We&apos;ll send you early access when we launch.</p>
                 </div>
               </div>
             ) : (
@@ -116,7 +112,7 @@ export function Hero(): React.ReactElement {
 
                 {formState === "duplicate" && (
                   <p className="mt-2 text-sm text-teal-600">
-                    You're already on the list — we'll be in touch soon.
+                    You&apos;re already on the list — we&apos;ll be in touch soon.
                   </p>
                 )}
                 {formState === "error" && (
@@ -138,11 +134,9 @@ export function Hero(): React.ReactElement {
                 {HERO_TEXT.trustBarRegulation}
               </span>
             </div>
-            {daysRemaining !== null && (
-              <span className="text-sm font-medium text-amber-700 sm:ml-2 sm:border-l sm:border-slate-300 sm:pl-4">
-                {daysRemaining} days until enforcement
-              </span>
-            )}
+            <span className="text-sm font-medium text-amber-700 sm:ml-2 sm:border-l sm:border-slate-300 sm:pl-4">
+              {daysRemaining} days until enforcement
+            </span>
           </div>
         </div>
       </div>

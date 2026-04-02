@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
+
+import { ToastProvider } from "@/components/shared/ToastProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -25,7 +27,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): React.ReactElement {
   return (
     <html lang="en">
       <body
@@ -33,6 +35,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         {children}
+        <ToastProvider />
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Shield, EyeOff, Clock } from "lucide-react";
 
 import { getDaysUntil } from "@/lib/utils";
@@ -15,11 +15,7 @@ const iconMap = {
 type IconName = keyof typeof iconMap;
 
 export function ProblemSection(): React.ReactElement {
-  const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
-
-  useEffect(() => {
-    setDaysRemaining(getDaysUntil(EU_AI_ACT_DEADLINE));
-  }, []);
+  const daysRemaining = useMemo(() => getDaysUntil(EU_AI_ACT_DEADLINE), []);
 
   return (
     <section className="bg-slate-50 py-12 lg:py-16">
@@ -33,9 +29,7 @@ export function ProblemSection(): React.ReactElement {
             const Icon = iconMap[item.icon as IconName];
             const isDeadlineStat = item.id === "deadline";
             const statText = isDeadlineStat
-              ? daysRemaining !== null
-                ? `${daysRemaining} ${item.stat}`
-                : `— ${item.stat}`
+              ? `${daysRemaining} ${item.stat}`
               : item.stat;
 
             return (

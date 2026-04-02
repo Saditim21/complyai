@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   Building2,
   Calendar,
-  FileText,
   Info,
   Shield,
   Users,
@@ -18,6 +17,7 @@ import { RiskBadge } from '@/components/shared/RiskBadge'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { ComplianceScore } from '@/components/dashboard/ComplianceScore'
 import { RequirementChecklist } from '@/components/dashboard/RequirementChecklist'
+import { GenerateDocumentButton } from '@/components/dashboard/GenerateDocumentButton'
 import type { AnnexIIIDomain, DataType } from '@/types/database'
 
 interface SystemDetailPageProps {
@@ -59,32 +59,6 @@ function InfoRow({ icon, label, value }: InfoRowProps): React.ReactElement {
         <dd className="mt-0.5 text-sm text-slate-900">{value}</dd>
       </div>
     </div>
-  )
-}
-
-interface DocumentButtonProps {
-  title: string
-  description: string
-  articleRef: string
-}
-
-function DocumentButton({ title, description, articleRef }: DocumentButtonProps): React.ReactElement {
-  return (
-    <button
-      type="button"
-      className="flex w-full items-start gap-4 rounded-lg border border-slate-200 bg-white p-4 text-left transition-colors hover:border-[--brand-secondary] hover:bg-slate-50"
-    >
-      <div className="rounded-lg bg-[--brand-secondary]/10 p-2 text-[--brand-secondary]">
-        <FileText className="h-5 w-5" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-slate-900">{title}</span>
-          <span className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-500">{articleRef}</span>
-        </div>
-        <p className="mt-1 text-sm text-slate-500">{description}</p>
-      </div>
-    </button>
   )
 }
 
@@ -262,35 +236,27 @@ export default async function SystemDetailPage({ params }: SystemDetailPageProps
               AI-powered document generation for EU AI Act compliance
             </p>
             <div className="mt-4 space-y-3">
-              <DocumentButton
+              <GenerateDocumentButton
+                aiSystemId={system.id}
+                documentType="technical_documentation"
                 title="Technical Documentation"
                 description="Detailed system specs and capabilities"
                 articleRef="Art. 11"
               />
-              <DocumentButton
+              <GenerateDocumentButton
+                aiSystemId={system.id}
+                documentType="risk_management_plan"
                 title="Risk Assessment"
                 description="Risk management system documentation"
                 articleRef="Art. 9"
               />
-              <DocumentButton
+              <GenerateDocumentButton
+                aiSystemId={system.id}
+                documentType="transparency_notice"
                 title="Transparency Notice"
                 description="User-facing AI disclosure"
                 articleRef="Art. 13"
               />
-              {system.risk_level === 'high' && (
-                <>
-                  <DocumentButton
-                    title="Conformity Assessment"
-                    description="High-risk system declaration"
-                    articleRef="Art. 43"
-                  />
-                  <DocumentButton
-                    title="Human Oversight Plan"
-                    description="Human-machine interaction procedures"
-                    articleRef="Art. 14"
-                  />
-                </>
-              )}
             </div>
           </div>
         </div>

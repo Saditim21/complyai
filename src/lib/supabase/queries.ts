@@ -8,6 +8,10 @@ import type {
   ComplianceRequirement,
   ComplianceRequirementInsert,
   ComplianceRequirementUpdate,
+  Document,
+  DocumentInsert,
+  DocumentUpdate,
+  DocumentWithSystem,
   User,
 } from '@/types/database'
 
@@ -267,4 +271,115 @@ export async function getAISystemStats(
   }
 
   return { data: stats, error: null }
+}
+
+// Document queries
+
+export async function getDocuments(
+  supabase: SupabaseClient,
+  orgId: string
+): Promise<QueryResult<DocumentWithSystem[]>> {
+  const { data, error } = await supabase
+    .from('documents')
+    .select(`
+      *,
+      ai_systems (name, risk_level)
+    `)
+    .eq('organization_id', orgId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as DocumentWithSystem[], error: null }
+}
+
+export async function getDocumentsBySystem(
+  supabase: SupabaseClient,
+  aiSystemId: string
+): Promise<QueryResult<Document[]>> {
+  const { data, error } = await supabase
+    .from('documents')
+    .select('*')
+    .eq('ai_system_id', aiSystemId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as Document[], error: null }
+}
+
+export async function getDocument(
+  supabase: SupabaseClient,
+  id: string
+): Promise<QueryResult<DocumentWithSystem>> {
+  const { data, error } = await supabase
+    .from('documents')
+    .select(`
+      *,
+      ai_systems (name, risk_level)
+    `)
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as DocumentWithSystem, error: null }
+}
+
+export async function createDocument(
+  supabase: SupabaseClient,
+  data: DocumentInsert
+): Promise<QueryResult<Document>> {
+  const { data: insertedData, error } = await supabase
+    .from('documents')
+    .insert(data)
+    .select()
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: insertedData as Document, error: null }
+}
+
+export async function updateDocument(
+  supabase: SupabaseClient,
+  id: string,
+  data: DocumentUpdate
+): Promise<QueryResult<Document>> {
+  const { data: updatedData, error } = await supabase
+    .from('documents')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: updatedData as Document, error: null }
+}
+
+export async function deleteDocument(
+  supabase: SupabaseClient,
+  id: string
+): Promise<QueryResult<null>> {
+  const { error } = await supabase
+    .from('documents')
+    .delete()
+    .eq('id', id)
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: null, error: null }
 }

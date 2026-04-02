@@ -51,10 +51,10 @@ export function CtaSection(): React.ReactElement {
           <div className="mt-8 rounded-xl border border-white/20 bg-white/10 p-6">
             <div className="flex items-center justify-center gap-2">
               <CheckCircle className="h-5 w-5 text-teal-400" aria-hidden="true" />
-              <p className="text-lg font-semibold text-white">You're on the list!</p>
+              <p className="text-lg font-semibold text-white">You&apos;re on the list!</p>
             </div>
             <p className="mt-2 text-sm text-slate-300">
-              We'll be in touch with early access to ClarionAI.
+              We&apos;ll be in touch with early access to ClarionAI.
             </p>
           </div>
         ) : (
@@ -96,7 +96,7 @@ export function CtaSection(): React.ReactElement {
 
             {formState === "duplicate" && (
               <p className="mt-3 text-sm text-teal-300">
-                You're already on the list — we'll be in touch soon.
+                You&apos;re already on the list — we&apos;ll be in touch soon.
               </p>
             )}
             {formState === "error" && (

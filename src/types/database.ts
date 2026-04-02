@@ -145,3 +145,64 @@ export interface User {
   role: 'owner' | 'admin' | 'member'
   created_at: string
 }
+
+// Document types
+export type DocumentType = 'technical_documentation' | 'risk_management_plan' | 'transparency_notice'
+
+export type DocumentStatus = 'draft' | 'review' | 'approved'
+
+export interface DocumentSection {
+  id: string
+  title: string
+  description: string
+  content: string
+  isRequired: boolean
+  articleReference: string
+}
+
+export interface Document {
+  id: string
+  organization_id: string
+  ai_system_id: string
+  document_type: DocumentType
+  title: string
+  content: {
+    aiSystemName: string
+    organizationName: string
+    sections: DocumentSection[]
+  }
+  version: string
+  status: DocumentStatus
+  created_at: string
+  updated_at: string
+}
+
+export interface DocumentInsert {
+  organization_id: string
+  ai_system_id: string
+  document_type: DocumentType
+  title: string
+  content: {
+    aiSystemName: string
+    organizationName: string
+    sections: DocumentSection[]
+  }
+  version: string
+  status?: DocumentStatus
+}
+
+export interface DocumentUpdate {
+  title?: string
+  content?: {
+    aiSystemName: string
+    organizationName: string
+    sections: DocumentSection[]
+  }
+  version?: string
+  status?: DocumentStatus
+}
+
+// Document with AI system info (for list views)
+export interface DocumentWithSystem extends Document {
+  ai_systems: Pick<AISystem, 'name' | 'risk_level'>
+}
