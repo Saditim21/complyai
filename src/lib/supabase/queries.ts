@@ -12,6 +12,7 @@ import type {
   DocumentInsert,
   DocumentUpdate,
   DocumentWithSystem,
+  Organization,
   User,
 } from '@/types/database'
 
@@ -408,4 +409,71 @@ export async function getAllRequirements(
   }
 
   return { data: data as RequirementWithSystem[], error: null }
+}
+
+// Organization queries
+
+export async function getOrganization(
+  supabase: SupabaseClient,
+  orgId: string
+): Promise<QueryResult<Organization>> {
+  const { data, error } = await supabase
+    .from('organizations')
+    .select('*')
+    .eq('id', orgId)
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as Organization, error: null }
+}
+
+export async function getUserWithOrganization(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<QueryResult<User & { organization: Organization | null }>> {
+  const { data, error } = await supabase
+    .from('users')
+    .select(`
+      *,
+      organization:organizations (*)
+    `)
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: data as User & { organization: Organization | null }, error: null }
+}
+
+export interface OrganizationUpdate {
+  name?: string
+  sector?: string | null
+  employee_count?: number | null
+  country?: string
+  stripe_customer_id?: string | null
+  subscription_tier?: string
+}
+
+export async function updateOrganization(
+  supabase: SupabaseClient,
+  orgId: string,
+  data: OrganizationUpdate
+): Promise<QueryResult<Organization>> {
+  const { data: updatedData, error } = await supabase
+    .from('organizations')
+    .update({ ...data, updated_at: new Date().toISOString() })
+    .eq('id', orgId)
+    .select()
+    .single()
+
+  if (error) {
+    return { data: null, error: { message: error.message, code: error.code } }
+  }
+
+  return { data: updatedData as Organization, error: null }
 }

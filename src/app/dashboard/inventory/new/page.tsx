@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react'
 
 import { createClient } from '@/lib/supabase/client'
 import { classifyRisk } from '@/lib/classification/engine'
+import { getTierPermissions } from '@/lib/stripe/permissions'
+import type { SubscriptionTier } from '@/lib/stripe/plans'
 import type { AISystemInput } from '@/types/classification'
 
 import { WizardProgress } from '@/components/wizard/WizardProgress'
@@ -15,22 +17,53 @@ import { StepClassification } from '@/components/wizard/StepClassification'
 import { StepRoadmap } from '@/components/wizard/StepRoadmap'
 import { StepSummary } from '@/components/wizard/StepSummary'
 import { getOptionById } from '@/components/wizard/discoveryOptions'
+import { UpgradePrompt } from '@/components/shared/UpgradePrompt'
 import type { WizardData, SystemDetails, SystemWithClassification } from '@/components/wizard/types'
 import { INITIAL_WIZARD_DATA } from '@/components/wizard/types'
 
 const STEP_LABELS = ['Discover', 'Details', 'Classification', 'Roadmap', 'Save']
 
+interface OrgData {
+  organizationId: string
+  subscriptionTier: SubscriptionTier
+  aiSystemCount: number
+}
+
 export default function NewSystemWizardPage(): React.ReactElement {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [data, setData] = useState<WizardData>(INITIAL_WIZARD_DATA)
-  const [organizationId, setOrganizationId] = useState<string>('')
+  const [orgData, setOrgData] = useState<OrgData | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchOrg = async (): Promise<void> => {
       const supabase = createClient()
-      const { data: userData } = await supabase.from('users').select('organization_id').single()
-      if (userData?.organization_id) setOrganizationId(userData.organization_id)
+      const { data: userData } = await supabase
+        .from('users')
+        .select('organization_id, organization:organizations(subscription_tier)')
+        .single()
+
+      if (userData?.organization_id) {
+        // Get AI system count
+        const { count } = await supabase
+          .from('ai_systems')
+          .select('*', { count: 'exact', head: true })
+          .eq('organization_id', userData.organization_id)
+
+        // Handle organization data - could be object or array depending on relationship
+        const orgData = userData.organization
+        const subscriptionTier = Array.isArray(orgData)
+          ? (orgData[0]?.subscription_tier ?? 'free')
+          : ((orgData as { subscription_tier?: string } | null)?.subscription_tier ?? 'free')
+
+        setOrgData({
+          organizationId: userData.organization_id,
+          subscriptionTier: subscriptionTier as SubscriptionTier,
+          aiSystemCount: count ?? 0,
+        })
+      }
+      setLoading(false)
     }
     fetchOrg()
   }, [])
@@ -104,6 +137,35 @@ export default function NewSystemWizardPage(): React.ReactElement {
     }
   }
 
+  // Check tier permissions
+  const permissions = orgData
+    ? getTierPermissions(orgData.subscriptionTier, orgData.aiSystemCount)
+    : null
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+      </div>
+    )
+  }
+
+  // Upgrade prompt if at limit
+  if (permissions && !permissions.canAddAISystem) {
+    const recommendedTier = orgData?.subscriptionTier === 'free' ? 'starter' :
+                           orgData?.subscriptionTier === 'starter' ? 'business' : 'pro'
+    return (
+      <div className="mx-auto max-w-lg">
+        <UpgradePrompt
+          message={`You've reached your limit of AI systems. Upgrade to ${recommendedTier} to add more systems.`}
+          recommendedTier={recommendedTier as SubscriptionTier}
+          variant="card"
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="mx-auto max-w-3xl">
       <WizardProgress currentStep={currentStep} totalSteps={5} stepLabels={STEP_LABELS} />
@@ -113,7 +175,7 @@ export default function NewSystemWizardPage(): React.ReactElement {
         {currentStep === 2 && <StepSystemDetails data={data} onUpdate={updateData} />}
         {currentStep === 3 && <StepClassification data={data} />}
         {currentStep === 4 && <StepRoadmap data={data} />}
-        {currentStep === 5 && <StepSummary data={data} organizationId={organizationId} />}
+        {currentStep === 5 && <StepSummary data={data} organizationId={orgData?.organizationId ?? ''} />}
       </div>
 
       {currentStep < 5 && (

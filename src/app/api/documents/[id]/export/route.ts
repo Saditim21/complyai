@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import PDFDocument from 'pdfkit'
 
 import { createClient } from '@/lib/supabase/server'
-import { getDocument, getUserByAuthId } from '@/lib/supabase/queries'
+import { getDocument, getUserByAuthId, getOrganization } from '@/lib/supabase/queries'
+import { getTierPermissions } from '@/lib/stripe/permissions'
+import type { SubscriptionTier } from '@/lib/stripe/plans'
 
 import type { DocumentStatus } from '@/types/database'
 
@@ -31,6 +33,18 @@ export async function GET(
   const { data: dbUser } = await getUserByAuthId(supabase, authUser.id)
   if (!dbUser?.organization_id) {
     return NextResponse.json({ error: 'User has no organization' }, { status: 400 })
+  }
+
+  // Check tier permissions for document export
+  const { data: org } = await getOrganization(supabase, dbUser.organization_id)
+  const tier = (org?.subscription_tier ?? 'free') as SubscriptionTier
+  const permissions = getTierPermissions(tier, 0)
+
+  if (!permissions.canExportDocuments) {
+    return NextResponse.json(
+      { error: 'Document export requires Starter plan or higher. Please upgrade your subscription.' },
+      { status: 403 }
+    )
   }
 
   const { data: document, error } = await getDocument(supabase, id)
