@@ -67,7 +67,7 @@ export default async function DashboardOverviewPage(): Promise<React.ReactElemen
   const { data: dbUser } = await getUserByAuthId(supabase, authUser.id)
 
   if (!dbUser?.organization_id) {
-    redirect('/login')
+    redirect('/onboarding')
   }
 
   const organizationId = dbUser.organization_id

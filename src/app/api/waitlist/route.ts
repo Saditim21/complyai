@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-
-import { createClient } from "@/lib/supabase/server";
+import { createClient as createSupabaseAdmin } from "@supabase/supabase-js";
 
 const waitlistSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -25,7 +24,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const { email, company_name } = parsed.data;
-  const supabase = await createClient();
+  const supabase = createSupabaseAdmin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
 
   const { error } = await supabase
     .from("waitlist")
